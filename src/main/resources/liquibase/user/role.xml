@@ -1,0 +1,32 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="create_role" author="minhtc">
+        <sql dbms="mysql">
+            create table ROLE
+            (
+            id   BIGINT not null,
+            role_name VARCHAR(30) not null
+            ) ;
+
+            alter table ROLE
+            add constraint role_pk primary key (id);
+
+            alter table ROLE
+            add constraint role_uk unique (role_name);
+        </sql>
+    </changeSet>
+
+    <changeSet id="insert_role_data" author="minhtc">
+        <sql dbms="mysql">
+            insert into role (ID, ROLE_NAME)
+            values (1, 'ROLE_ADMIN');
+
+            insert into role (ID, ROLE_NAME)
+            values (2, 'ROLE_USER');
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,19 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="create_persistent_logins" author="minhtc">
+        <sql dbms="mysql">
+            CREATE TABLE Persistent_Logins (
+
+            username varchar(64) not null,
+            series varchar(64) not null,
+            token varchar(64) not null,
+            last_used timestamp not null,
+            PRIMARY KEY (series)
+            );
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

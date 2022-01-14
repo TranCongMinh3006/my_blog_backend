@@ -1,0 +1,36 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="create_post_comment" author="minhtc">
+        <sql dbms="mysql">
+            CREATE TABLE `blog`.`post_comment` (
+            `id` BIGINT NOT NULL AUTO_INCREMENT,
+            `post_id` BIGINT NOT NULL,
+            `parent_id` BIGINT NULL DEFAULT NULL,
+            `title` VARCHAR(100) NOT NULL,
+            `published` TINYINT(1) NOT NULL DEFAULT 0,
+            `created_at` DATETIME NOT NULL,
+            `published_at` DATETIME NULL DEFAULT NULL,
+            `content` TEXT NULL DEFAULT NULL,
+            PRIMARY KEY (`id`),
+            INDEX `idx_comment_post` (`post_id` ASC),
+            CONSTRAINT `fk_comment_post`
+            FOREIGN KEY (`post_id`)
+            REFERENCES `blog`.`post` (`id`)
+            ON DELETE NO ACTION
+            ON UPDATE NO ACTION);
+
+            ALTER TABLE `blog`.`post_comment`
+            ADD INDEX `idx_comment_parent` (`parent_id` ASC);
+            ALTER TABLE `blog`.`post_comment`
+            ADD CONSTRAINT `fk_comment_parent`
+            FOREIGN KEY (`parent_id`)
+            REFERENCES `blog`.`post_comment` (`id`)
+            ON DELETE NO ACTION
+            ON UPDATE NO ACTION;
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

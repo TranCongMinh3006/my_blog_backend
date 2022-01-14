@@ -1,0 +1,28 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="create_category" author="minhtc">
+        <sql dbms="mysql">
+            CREATE TABLE `blog`.`category` (
+            `id` BIGINT NOT NULL AUTO_INCREMENT,
+            `parent_id` BIGINT NULL DEFAULT NULL,
+            `title` VARCHAR(75) NOT NULL,
+            `meta_title` VARCHAR(100) NULL DEFAULT NULL,
+            `slug` VARCHAR(100) NOT NULL,
+            `content` TEXT NULL DEFAULT NULL,
+            PRIMARY KEY (`id`));
+
+            ALTER TABLE `blog`.`category`
+            ADD INDEX `idx_category_parent` (`parent_id` ASC);
+            ALTER TABLE `blog`.`category`
+            ADD CONSTRAINT `fk_category_parent`
+            FOREIGN KEY (`parent_id`)
+            REFERENCES `blog`.`category` (`id`)
+            ON DELETE NO ACTION
+            ON UPDATE NO ACTION;
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

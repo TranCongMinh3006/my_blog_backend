@@ -1,0 +1,44 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="create_user_role" author="minhtc">
+        <sql dbms="mysql">
+            create table USER_ROLE
+            (
+            id      BIGINT not null,
+            user_id BIGINT not null,
+            role_id BIGINT not null
+            );
+
+            alter table USER_ROLE
+            add constraint user_role_pk primary key (id);
+
+            alter table USER_ROLE
+            add constraint user_role_uk unique (user_id, role_id);
+
+            alter table USER_ROLE
+            add constraint user_role_fk1 foreign key (user_id)
+            references USER (id);
+
+            alter table USER_ROLE
+            add constraint user_role_fk2 foreign key (ROLE_ID)
+            references ROLE (id);
+        </sql>
+    </changeSet>
+
+    <changeSet id="insert_user_role_data" author="minhtc">
+        <sql dbms="mysql">
+            insert into user_role (ID, USER_ID, ROLE_ID)
+            values (1, 1, 1);
+
+            insert into user_role (ID, USER_ID, ROLE_ID)
+            values (2, 1, 2);
+
+            insert into user_role (ID, USER_ID, ROLE_ID)
+            values (3, 2, 2);
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>
